@@ -14,7 +14,8 @@
   "dependencies": {
     "socket.io": "*",
     "mocha": "*",
-    "expect.js": "*"
+    "expect.js": "*",
+    "glob": "*"
   },
   "devDependencies": {
     "rewire": "*"
