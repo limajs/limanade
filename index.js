@@ -20,13 +20,21 @@ function renderFile (filePath, res) {
     });
 }
 
+function findClientSpecs (callback) {
+    callback (['specone', 'spectwo']);
+}
+
 function socketHandler (socket) {
     console.log('SpecRunner Socket Connection Recvd');
+    findClientSpecs(function (specs) {
+        socket.send('speclist', specs);
+    });
 }
 
 var limanade = function (server, io) {
     server.on('request', httpHandler);
-    var specrunnerSocket = io.of('/specrunner').on('connection', socketHandler);
+    var specRunnerSocket = io.of('/specrunner');
+    specRunnerSocket.on('connection', socketHandler);
 };
 
 module.exports = limanade;

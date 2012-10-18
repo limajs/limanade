@@ -15,5 +15,8 @@
     "socket.io": "*",
     "mocha": "*",
     "expect.js": "*"
+  },
+  "devDependencies": {
+    "rewire": "*"
   }
 }
