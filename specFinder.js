@@ -1,7 +1,7 @@
 var glob = require('glob');
-var specFinder = function (pattern, callback) {
+var specFinder = function (callback) {
     var options = {};
-    glob(pattern, options, function (err, files) {
+    glob("specs/**/*.js", options, function (err, files) {
         var modulePaths = files.map(function (file) {
             return file.slice(0, -3);
         })

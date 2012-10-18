@@ -16,7 +16,7 @@ describe("Spec Finder", function () {
                 done();
             }
 
-            specFinder("specs/**/*.js", onComplete);
+            specFinder(onComplete);
         });
     });
 });
