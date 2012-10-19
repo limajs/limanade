@@ -4,7 +4,7 @@ var specFinder = function (callback) {
     glob("specs/**/*.js", options, function (err, files) {
         var modulePaths = files.map(function (file) {
             return file.slice(0, -3);
-        })
+        });
         callback(modulePaths);
     });
 };

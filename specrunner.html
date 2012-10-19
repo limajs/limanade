@@ -7,7 +7,9 @@
         <script src="/specrunner/modules/mocha.js"></script>
         <script>
             var socket = io.connect("http://localhost/specrunner");
-
+            socket.on("specs", function (data) {
+                console.log("spec", data);
+            });
         </script>
     </head>
     <body>

@@ -1,5 +1,6 @@
 var fs = require('fs');
 var path = require('path');
+var specFinder = require('./specFinder');
 
 function httpHandler (req, res) {
     if (req.url === '/specrunner') {
@@ -20,14 +21,13 @@ function renderFile (filePath, res) {
     });
 }
 
-function findClientSpecs (callback) {
-    callback (['specone', 'spectwo']);
-}
-
 function socketHandler (socket) {
-    console.log('SpecRunner Socket Connection Recvd');
-    findClientSpecs(function (specs) {
-        socket.send('speclist', specs);
+    specFinder(function (specs) {
+        if(specs.length > 0){
+            socket.send('speclist', specs);
+        } else {
+            socket.send('nospecs', null);
+        }
     });
 }
 

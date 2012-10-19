@@ -14,7 +14,7 @@ describe("Spec Finder", function () {
                 expect(specs[0]).to.be('specs/specone');
                 expect(specs[1]).to.be('specs/subdir/spectwo');
                 done();
-            }
+            };
 
             specFinder(onComplete);
         });
