@@ -24,9 +24,9 @@ function renderFile (filePath, res) {
 function socketHandler (socket) {
     specFinder(function (specs) {
         if(specs.length > 0){
-            socket.send('speclist', specs);
+            socket.emit('speclist', specs );
         } else {
-            socket.send('nospecs', null);
+            socket.emit('nospecs', null);
         }
     });
 }
