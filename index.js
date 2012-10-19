@@ -1,28 +1,34 @@
 var fs = require('fs');
 var path = require('path');
 var specFinder = require('./specFinder');
+var specDir;
 
 function httpHandler (req, res) {
     if (req.url === '/specrunner') {
-        renderFile('specrunner.html', res);
+        renderFile(__dirname, 'specrunner.html', res);
     } else if (req.url === '/specrunner/modules/mocha.js') {
-        renderFile('node_modules/mocha/mocha.js', res);
+        renderFile(__dirname, 'node_modules/mocha/mocha.js', res);
+    } else if (req.url === '/specrunner/modules/require.js') {
+        renderFile(__dirname, 'require.js', res);
+    } else if (req.url.substring(0,7) === '/specs/') {
+        renderFile(specDir, req.url, res);
     }
 }
 
-function renderFile (filePath, res) {
-    fs.readFile(path.join(__dirname, filePath), function (err, data) {
+function renderFile (dirName, filePath, res) {
+    fs.readFile(path.join(dirName, filePath), function (err, data) {
         if (err) {
             console.log(err);
             res.statusCode = 404;
             res.end();
         }
+        res.statusCode = 200;
         res.end(data);
     });
 }
 
 function socketHandler (socket) {
-    specFinder(function (specs) {
+    specFinder(specDir, function (specs) {
         if(specs.length > 0){
             socket.emit('speclist', specs );
         } else {
@@ -31,7 +37,10 @@ function socketHandler (socket) {
     });
 }
 
-var limanade = function (server, io) {
+var limanade = function (server, io, options) {
+    //Needs Tests!!!!!
+    var options = options || {};
+    specDir = options.specDir || process.cwd();
     server.on('request', httpHandler);
     var specRunnerSocket = io.of('/specrunner');
     specRunnerSocket.on('connection', socketHandler);

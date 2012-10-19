@@ -19,7 +19,7 @@ describe("Socket Handling", function () {
         describe("Given that there are client-side specs to run", function () {
 
             beforeEach(function () {
-                limanade.__set__('specFinder', function (callback) {
+                limanade.__set__('specFinder', function (workingDir, callback) {
                     callback(['specone', 'spectwo']);
                 });
             });
@@ -41,7 +41,7 @@ describe("Socket Handling", function () {
         describe("Given no specs are found", function () {
 
             beforeEach(function () {
-                limanade.__set__('specFinder', function (callback) {
+                limanade.__set__('specFinder', function (workingDir, callback) {
                     callback([]);
                 });
             });

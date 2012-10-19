@@ -6,6 +6,9 @@
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha"
   },
+  "bin": {
+    "limanade": "specrunner.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/limajs/limanade.git"

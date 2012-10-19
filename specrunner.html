@@ -5,13 +5,16 @@
         <meta charset='utf-8'>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/specrunner/modules/mocha.js"></script>
+        <script src="/specrunner/modules/require.js"></script>
         <script>
             var socket = io.connect("http://localhost/specrunner");
             socket.on("nospecs", function () {
                 console.log("nospecs");
             });
-            socket.on("speclist", function (data) {
-                console.log("speclist", data);
+            socket.on("speclist", function (speclist) {
+                require(speclist, function () {
+                    console.log('Loaded specs');
+                });
             });
         </script>
     </head>

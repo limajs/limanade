@@ -5,7 +5,9 @@ var specFinder = rewire('../specFinder');
 describe("Spec Finder", function () {
     describe("When called", function () {
         it("Returns an array of client-side spec module names", function (done) {
+            var myWorkingDirectory = 'MyWorkingDir';
             var mockGlob = function (pattern, options, callback) {
+                expect(options.cwd).to.be("MyWorkingDir");
                 expect(pattern).to.be("specs/**/*.js");
                 callback(null, ['specs/specone.js', 'specs/subdir/spectwo.js']);
             };
@@ -16,7 +18,7 @@ describe("Spec Finder", function () {
                 done();
             };
 
-            specFinder(onComplete);
+            specFinder(myWorkingDirectory, onComplete);
         });
     });
 });
