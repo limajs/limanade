@@ -3,22 +3,27 @@
     <head>
         <title>Limanade Spec Runner</title>
         <meta charset='utf-8'>
+        <link rel="stylesheet" href="/specrunner/modules/mocha.css" />
         <script src="/socket.io/socket.io.js"></script>
         <script src="/specrunner/modules/mocha.js"></script>
         <script src="/specrunner/modules/require.js"></script>
+        <script src="/specrunner/modules/expect.js"></script>
         <script>
             var socket = io.connect("http://localhost/specrunner");
+            mocha.setup('bdd');
+
             socket.on("nospecs", function () {
                 console.log("nospecs");
             });
             socket.on("speclist", function (speclist) {
                 require(speclist, function () {
                     console.log('Loaded specs');
+                    mocha.run();
                 });
             });
         </script>
     </head>
     <body>
-    
+        <div id="mocha"></div>
     </body>
 </html>

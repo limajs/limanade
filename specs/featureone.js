@@ -1,1 +1,5 @@
-console.log("Loaded Dummy Spec One");
+describe("Smoke Test", function () {
+    it("Smokes", function () {
+        expect(true).to.be(false);
+    });
+});

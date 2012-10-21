@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-var port = 8000;
+var port = 8001;
 var args = process.argv.slice(2);
 
 var http = require("http");
@@ -31,7 +31,7 @@ if (process.platform === 'win32') {
         '--no-default-browser-check',
         '--no-first-run',
         '--disable-default-apps',
-        '--user-data-dir=' + __dirname
+        '--user-data-dir=' + __dirname + '/googletmp'
     ]);
     browserProcess.stdout.on('data', function (data) {
         console.log(data);

@@ -8,6 +8,8 @@ function httpHandler (req, res) {
         renderFile(__dirname, 'specrunner.html', res);
     } else if (req.url === '/specrunner/modules/mocha.js') {
         renderFile(__dirname, 'node_modules/mocha/mocha.js', res);
+    } else if (req.url === '/specrunner/modules/mocha.css') {
+        renderFile(__dirname, 'node_modules/mocha/mocha.css', res);
     } else if (req.url === '/specrunner/modules/require.js') {
         renderFile(__dirname, 'require.js', res);
     } else if (req.url.substring(0,7) === '/specs/') {
@@ -37,9 +39,9 @@ function socketHandler (socket) {
     });
 }
 
-var limanade = function (server, io, options) {
+var limanade = function (server, io, opts) {
     //Needs Tests!!!!!
-    var options = options || {};
+    var options = opts || {};
     specDir = options.specDir || process.cwd();
     server.on('request', httpHandler);
     var specRunnerSocket = io.of('/specrunner');
