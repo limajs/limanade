@@ -2,17 +2,14 @@
 
 var port = 8001;
 var args = process.argv.slice(2);
-
 var http = require("http");
 var limanade = require("./index");
 var server = http.createServer();
 var io = require("socket.io").listen(server);
+//io.set('log level', 2);
 
-limanade(server, io, {
-    specDir: args[0]
-});
+limanade(server, io);
 server.listen(port);
-console.log("Limanade started");
 
 var child_process = require("child_process");
 
@@ -40,4 +37,3 @@ if (process.platform === 'win32') {
         console.log("Error:", data.toString());
     });
 }
-console.log("Starting browser", browserExePath);

@@ -2,6 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var specFinder = require('./specFinder');
 var specDir;
+var reporter;
 
 function httpHandler (req, res) {
     if (req.url === '/specrunner') {
@@ -39,12 +40,28 @@ function socketHandler (socket) {
             socket.emit('nospecs', null);
         }
     });
+
+    socket.on('specs_starting', function (data) {
+        console.log("Execution of Specs is Starting");
+    });
+
+    socket.on('suite', function (suite) {
+        console.log("Suite:", reporter);
+        reporter.log("Suite", suite);
+    });
+
+    socket.on('test_end', function (test) {
+        console.log("Test End", test);
+    });
 }
 
 var limanade = function (server, io, opts) {
+    console.log("Limanade Starting");
     //Needs Tests!!!!!
     var options = opts || {};
     specDir = options.specDir || process.cwd();
+    reporter = options.reporter || require('./reporters/basicReporter');
+    console.log("Using Reporter:", reporter);
     server.on('request', httpHandler);
     var specRunnerSocket = io.of('/specrunner');
     specRunnerSocket.on('connection', socketHandler);

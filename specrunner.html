@@ -9,8 +9,42 @@
         <script src="/specrunner/modules/require.js"></script>
         <script src="/specrunner/modules/expect.js"></script>
         <script>
+            var limaReporter = function (runner) {
+                console.log("Started Lima Reporter");
+                runner.on('start', function () {
+                    console.log("Starting Lima Tests", socket);
+                    socket.emit('specs_starting', 'Starting Lima Tests');
+                });
+                runner.on('pass', function (data) {
+                    console.log("Test Passed", data);
+                    socket.emit('spec_pass', data.title);
+                });
+                runner.on('fail', function (data, err) {
+                    console.log("Failed", data, err.toString());
+                    socket.emit('spec_fail', data.title + " : " + err);
+                });
+                runner.on('suite', function (suite) {
+                    console.log("Suite", suite);
+                    socket.emit('suite', {
+                        title: suite.title
+                    });
+                });
+                runner.on('end', function (data) {
+                    console.log("End", data);
+                });
+                runner.on('test end', function (test) {
+                    console.log("Test End", test);
+                    socket.emit('test_end', {
+                        title: test.title
+                    });
+                });
+            };
+
             var socket = io.connect("http://localhost/specrunner");
-            mocha.setup('bdd');
+            mocha.setup({
+                ui: 'bdd',
+                reporter: limaReporter
+            });
 
             socket.on("nospecs", function () {
                 console.log("nospecs");
