@@ -12,6 +12,8 @@ function httpHandler (req, res) {
         renderFile(__dirname, 'node_modules/mocha/mocha.css', res);
     } else if (req.url === '/specrunner/modules/require.js') {
         renderFile(__dirname, 'require.js', res);
+    } else if (req.url === '/specrunner/modules/expect.js') {
+        renderFile(__dirname, 'node_modules/expect.js/expect.js', res);
     } else if (req.url.substring(0,7) === '/specs/') {
         renderFile(specDir, req.url, res);
     }

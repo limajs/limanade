@@ -110,6 +110,7 @@ describe("Limanade routes", function () {
             server.emit('request', req, res);
         });
     });
+
     describe("Url '/specrunner/modules/expect.js'", function () {
         it("Returns expect.js from the limanade directory", function (done) {
             var req = {
@@ -124,7 +125,7 @@ describe("Limanade routes", function () {
             };
 
             mockfs.readFile = function (filename, callback) {
-                var expectedFilename = path.join(process.cwd(), 'expect.js');
+                var expectedFilename = path.join(process.cwd(), 'node_modules/expect.js/expect.js');
                 expect(filename).to.be(expectedFilename);
                 callback(null, 'ExpectJSFile');
             };
