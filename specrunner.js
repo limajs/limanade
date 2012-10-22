@@ -4,6 +4,7 @@ var port = 8001;
 var args = process.argv.slice(2);
 var http = require("http");
 var limanade = require("./index");
+var path = require("path");
 var server = http.createServer();
 var io = require("socket.io").listen(server);
 //io.set('log level', 2);
@@ -25,12 +26,14 @@ if (process.platform === 'win32') {
     ]);
 } else {
     browserExePath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+    var tmpDir = path.normalize((process.env.TMPDIR || env.TMP || env.TEMP || '/tmp') + '/limanade');
+    console.log("TempDir", tmpDir);
     browserProcess = child_process.spawn(browserExePath, [
         'http://localhost:' + port + '/specrunner',
         '--no-default-browser-check',
         '--no-first-run',
         '--disable-default-apps',
-        '--user-data-dir=' + __dirname + '/googletmp'
+        '--user-data-dir=' + tmpDir
     ]);
     browserProcess.stdout.on('data', function (data) {
         console.log(data);
