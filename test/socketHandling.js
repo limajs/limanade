@@ -10,12 +10,8 @@ var io = {
     }
 };
 
-var dummySpecReporter = {
-    log: function (type, data){}
-};
-limanade(server, io, {
-    reporter: dummySpecReporter
-});
+limanade(server, io);
+
 
 describe("Socket Handling", function () {
 
@@ -63,20 +59,6 @@ describe("Socket Handling", function () {
                 };
 
                 specRunnerSocket.emit('connection', clientSocket);
-            });
-        });
-
-        describe("On receipt of a 'suite' message", function () {
-            it("Reports the title of the suite", function (done) {
-                dummySpecReporter.log = function (type, data) {
-                    expect(type).to.be('Suite');
-                    expect(data.title).to.be('Suite Title');
-                    done();
-                };
-
-                var clientSocket = new events.EventEmitter();
-                specRunnerSocket.emit('connection', clientSocket);
-                clientSocket.emit('suite', {title: 'Suite Title'});
             });
         });
     });

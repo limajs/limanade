@@ -1,1 +1,2 @@
-node .\node_modules\mocha\bin\mocha
+@cls
+@node .\node_modules\mocha\bin\mocha

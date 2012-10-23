@@ -8,7 +8,9 @@ var server = http.createServer();
 var io = require("socket.io").listen(server);
 //io.set('log level', 2);
 
-limanade(server, io);
+limanade(server, io, {
+    reporter: 'spec'
+});
 server.listen(port);
 
 var child_process = require("child_process");
