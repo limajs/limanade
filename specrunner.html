@@ -51,19 +51,13 @@
                 });
 
                 var getDto = function (suiteOrTest) {
-                    console.log(suiteOrTest);
-                    var fnAsString = "";
-                    if (suiteOrTest.fn) {
-                        fnAsString = fn.toString();
-                    }
                     return {
                         root: suiteOrTest.root,
                         title: suiteOrTest.title,
                         _slow: suiteOrTest.slow,
                         state: suiteOrTest.state,
                         speed: suiteOrTest.speed,
-                        duration: suiteOrTest.duration,
-                        fn: fnAsString
+                        duration: suiteOrTest.duration
                     };
                 }
             };
