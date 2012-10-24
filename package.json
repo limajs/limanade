@@ -21,6 +21,7 @@
     "glob": "*"
   },
   "devDependencies": {
-    "rewire": "*"
+    "rewire": "*",
+    "sinon": "*"
   }
 }
