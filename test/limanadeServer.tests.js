@@ -4,7 +4,8 @@ var limanade = require("../limanade");
 describe("Limanade Server", function () {
     describe("Start a standalone server", function () {
         beforeEach(function (done) {
-            limanade.start(7000, function () {
+            var port = process.env.port || 7000;
+            limanade.start(port, function () {
                 done();
             });
         });
