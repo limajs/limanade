@@ -4,20 +4,15 @@ var limanade = require("../limanade");
 describe("Limanade Server", function () {
     describe("Start a standalone server", function () {
         beforeEach(function (done) {
-            var port = process.env.port || 7000;
-            limanade.start(port, function () {
-                done();
-            });
+            limanade.start(7000, done);
         });
 
         afterEach(function (done) {
-            limanade.stop(function () {
-                done();
-            });
+            limanade.stop(done);
         });
 
         it("Starts up an http server on the port provided", function () {
-            expect(limanade.httpServer._connectionKey).to.be("4:0.0.0.0:7000");
+            expect(limanade.httpServer.address().port).to.be(7000);
         });
 
         it("Starts up a socket server attached to the http server", function () {
