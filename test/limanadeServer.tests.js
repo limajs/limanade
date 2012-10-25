@@ -7,8 +7,8 @@ describe("Limanade Server", function () {
             limanade.start(7000, done);
         });
 
-        afterEach(function (done) {
-            limanade.stop(done);
+        afterEach(function () {
+            limanade.stop();
         });
 
         it("Starts up an http server on the port provided", function () {
