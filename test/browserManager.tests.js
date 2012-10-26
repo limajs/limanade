@@ -27,14 +27,4 @@ describe("Browser Manager", function () {
             sinon.assert.calledWith(child_process.spawn, '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome');
         });
     });
-
-    describe("On win32, when open is called with browsername 'chrome'", function () {
-        it("Spawns the correct child process", function () {
-            currentPlatform = 'win32';
-            browserManager.open('chrome');
-
-            sinon.assert.calledWith(child_process.spawn, 'C:\\Windows\\MyAppDataDir\\google\\chrome\\application\\chrome.exe');
-        });
-    });
-
 });
