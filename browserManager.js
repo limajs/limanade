@@ -7,18 +7,27 @@ var localAppDataDirectory = process.env.LOCALAPPDATA;
 var browserProcessHash = {
     "darwin": {
         "chrome": {
-            "process": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-            "args": [
-                '--no-default-browser-check',
-                '--no-first-run',
-                '--disable-default-apps',
-                '--user-data-dir=' + getTempDirectory()
-            ]
+            "process": function () {
+                return "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+            },
+            "args": function () {
+                return [
+                    '--no-default-browser-check',
+                    '--no-first-run',
+                    '--disable-default-apps',
+                    '--user-data-dir=' + getTempDirectory()
+                ];
+            }
         }
     },
     "win32": {
         "chrome": {
-            "process":  localAppDataDirectory + "\\google\\chrome\\application\\chrome.exe"
+            "process":  function () {
+                return localAppDataDirectory + "\\google\\chrome\\application\\chrome.exe";
+            },
+            "args": function () {
+                return [];
+            }
         }
     }
 };
@@ -28,15 +37,15 @@ function getPlatform () {
 }
 
 function getTempDirectory () {
-    return path.normalize((process.env.TMPDIR || env.TMP || env.TEMP || '/tmp') + '/limanade');
+    return path.normalize((process.env.TMPDIR || '/tmp') + '/limanade');
 }
 
 browserManager.open = function (browserName, port) {
     var platform = getPlatform();
-    var browserProcess = browserProcessHash[platform][browserName].process;
-    var args = browserProcessHash[platform][browserName].args;
+    var browserProcess = browserProcessHash[platform][browserName].process();
+    var args = browserProcessHash[platform][browserName].args();
     args.push("http://localhost:" + port + "/specrunner");
-    child_process.spawn(browserProcess, args);
+        child_process.spawn(browserProcess, args);
 };
 
 module.exports = browserManager;
